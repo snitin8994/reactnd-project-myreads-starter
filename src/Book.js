@@ -3,8 +3,15 @@ import React, { Component } from "react";
 class Book extends Component {
   render() {
     let { title, authors, imageLinks, shelf } = this.props.book;
-    let { updateBook } = this.props;
-    authors = authors.join(" ");
+    let string;
+    const { updateBook } = this.props;
+    if (Array.isArray(authors)) authors = authors.join(" ");
+    if (authors === (undefined || null || "")) authors = "Unknown";
+    if (imageLinks === undefined) {
+      string = "";
+    } else {
+      string = imageLinks.smallThumbnail;
+    }
 
     return (
       <li>
@@ -15,9 +22,9 @@ class Book extends Component {
               style={{
                 width: 128,
                 height: 193,
-                backgroundImage: `url(${imageLinks.smallThumbnail})`
+                backgroundImage: `url(${string})`
               }}
-            />
+            />{" "}
             <div className="book-shelf-changer">
               <select
                 value={shelf || "none"}
@@ -27,17 +34,17 @@ class Book extends Component {
               >
                 <option value="move" disabled>
                   Move to...
-                </option>
-                <option value="currentlyReading">Currently Reading</option>
-                <option value="wantToRead">Want to Read</option>
-                <option value="read">Read</option>
-                <option value="none">None</option>
-              </select>
-            </div>
-          </div>
-          <div className="book-title">{title}</div>
-          <div className="book-authors">{authors}</div>
-        </div>
+                </option>{" "}
+                <option value="currentlyReading"> Currently Reading </option>{" "}
+                <option value="wantToRead"> Want to Read </option>{" "}
+                <option value="read"> Read </option>{" "}
+                <option value="none"> None </option>{" "}
+              </select>{" "}
+            </div>{" "}
+          </div>{" "}
+          <div className="book-title"> {title} </div>{" "}
+          <div className="book-authors"> {authors} </div>{" "}
+        </div>{" "}
       </li>
     );
   }

@@ -10,6 +10,9 @@ class MainPage extends Component {
 
   componentDidMount() {
     BooksAPI.getAll().then(books => {
+      console.log("Main");
+      console.log(books);
+      console.log("-------------");
       this.setState({
         books
       });
